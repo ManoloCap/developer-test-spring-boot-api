@@ -1,54 +1,19 @@
-# React + TypeScript + Vite
+# 📱 SMS Splitter API - Design & Analysis
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. **Architecture Decisions**  
+I used a clean **layered architecture** with Spring Boot backend and React frontend. The backend follows MVC pattern with clear separation: Controllers handle HTTP, Services contain business logic, and Models manage data validation. Frontend uses component composition with TypeScript for type safety and Tailwind for the styling. This structure ensures maintainability and testability.
 
-Currently, two official plugins are available:
+## 2. **API Design**  
+I implemented **header-based versioning** (`X-API-Version: 1.0.0`) instead of URL versioning for cleaner endpoints. The API follows REST conventions with consistent error responses containing field-level validation details. I chose semantic versioning to clearly communicate breaking vs. non-breaking changes to API consumers.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 3. **State Management**  
+I used **React's built-in useState** rather than other state management like Redux or AppContext because was a simple project. For this SMS splitting app there is no complex state sharing between components. This avoids overengineering while maintaining clean component boundaries and fast performance.
 
-## Expanding the ESLint configuration
+## 4. **Security**  
+I implemented **input validation** with Bean Validation annotations, **CORS configuration** for cross-origin requests, and **secure error handling** that doesn't expose internal details. For production, I would add JWT authentication, rate limiting, and HTTPS enforcement, but they weren't necessary for this demo scope.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 5. **Scalability & Maintainability**  
+For enterprise scale, I would add: **database persistence** (PostgreSQL), **caching layer** (Redis), **containerization** (Docker/Kubernetes), and **monitoring** (Prometheus/Grafana). The current modular architecture supports these additions without major refactoring.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 6. **Time Constraints**  
+I focused on core functionality and skipped: User Authentication and writing all the posible cases for the tests.
