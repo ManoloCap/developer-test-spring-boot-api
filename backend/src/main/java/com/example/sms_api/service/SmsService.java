@@ -56,15 +56,20 @@ public class SmsService {
             return parts;
         }
         
-        // Split with part numbering using "... - Part X of Y" format
+        // Split with part numbering using "... - Part X of Y" format (except last part)
         int start = 0;
         int partNumber = 1;
-        String partSuffix = "... - Part %d of %d";
-        int suffixLength = String.format(partSuffix, 1, 99).length(); // Reserve space for suffix
+        String partSuffixWithDots = "... - Part %d of %d";
+        String partSuffixLastPart = " - Part %d of %d";
+        int suffixLength = String.format(partSuffixWithDots, 1, 99).length(); // Reserve space for suffix
         int totalParts = (int) Math.ceil((double) message.length() / (maxLength - suffixLength));
         
         while (start < message.length()) {
-            String currentPartInfo = String.format(partSuffix, partNumber, totalParts);
+            boolean isLastPart = partNumber == totalParts;
+            String currentPartInfo = String.format(
+                isLastPart ? partSuffixLastPart : partSuffixWithDots, 
+                partNumber, totalParts
+            );
             int availableLength = maxLength - currentPartInfo.length();
             
             int end = Math.min(start + availableLength, message.length());
