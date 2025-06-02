@@ -59,8 +59,8 @@ export const SmsForm: React.FC<SmsFormProps> = ({ onSmsParts }) => {
               onChange={(e) => setApiVersion(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 text-black"
             >
-              <option value="1.0.0">v1.0.0</option>
-              <option value="1.1.0">v1.1.0</option>
+              <option value="1.0.0">v1.0.0 (Without part numbering)</option>
+              <option value="1.1.0">v1.1.0 (With part numbering)</option>
             </select>
           </div>
 
